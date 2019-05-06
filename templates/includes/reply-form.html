@@ -1,0 +1,9 @@
+<form class="mx-3" action="" method="post">
+	{% csrf_token %}
+	<input type="hidden" name="comment_id" value="-1">
+	<div class="form-group">
+		<label>Comment</label>
+		<textarea class="form-control mb-2" name="body" placeholder="Write your comment"></textarea>
+		<button class="btn btn-primary">Submit</button>
+	</div>
+</form>

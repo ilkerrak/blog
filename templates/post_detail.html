@@ -15,24 +15,39 @@
 				{{ post.body }}
 			</div>
 			<hr>
+			<div class="mx-2">
+				{% include "includes/messages.html" %}
+			</div>
 			{% for comment in comments %}
-			<p class="mx-3">
-				{{ comment }}<br>
-				<span class="text-muted">{{ comment.user }}</span>
-			</p>
+			{% include "includes/comment.html" with comment=comment %}
+			{% for reply in comment.comment_set.all %}
+				<div class="ml-4" style="border-left:#333 1px solid">
+					{% include "includes/comment.html" with comment=reply %}
+				</div>
+			{% endfor %}
 			{% empty %}
 			<p class="text-center">There is no comments! <br> <small>Be the first one who comment</small></p>
 			{% endfor %}
-			<form class="mx-3" action="" method="post">
-				{% csrf_token %}
-				{% include "includes/messages.html" %}
-				<div class="form-group">
-					<label>Comment</label>
-					<textarea class="form-control mb-2" name="body" placeholder="Write your comment"></textarea>
-					<button class="btn btn-primary">Submit</button>
-				</div>
-			</form>
+			{% include "includes/reply-form.html" %}
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="replymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              	{% include "includes/reply-form.html" %}  
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
+{% block js %}
+<script type="text/javascript" src="/static/blog/post_detail.js"></script>
+{% endblock js %}

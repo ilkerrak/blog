@@ -1,0 +1,4 @@
+<p class="mx-3">
+	{{ comment }}<br>
+	<small class="text-muted">{{ comment.user }}{% if not comment.reply %} - <a href="javascript:void(0)" comment-pk="{{ comment.pk }}" class="reply-link">Reply</a>{% endif %}</small>
+</p>
