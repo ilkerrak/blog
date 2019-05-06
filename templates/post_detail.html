@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+	<div class="text-right">
+		<a href="{% url 'home_page' %}" class="btn btn-danger btn-sm">Back</a>
+	</div>
+	<br>
+	<div>
+		<div class="card">
+			<div class="card-header">
+				{{ post.title }}
+			</div>
+			<div class="card-body">
+				<small class="card-subtitle text-muted">{{ post.user }} - {{ post.published }}</small><br>
+				{{ post.body }}
+			</div>
+			<hr>
+			{% for comment in comments %}
+			<p class="mx-3">
+				{{ comment }}<br>
+				<span class="text-muted">{{ comment.user }}</span>
+			</p>
+			{% empty %}
+			<p class="text-center">There is no comments! <br> <small>Be the first one who comment</small></p>
+			{% endfor %}
+			<form class="mx-3" action="" method="post">
+				{% csrf_token %}
+				{% include "includes/messages.html" %}
+				<div class="form-group">
+					<label>Comment</label>
+					<textarea class="form-control mb-2" name="body" placeholder="Write your comment"></textarea>
+					<button class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock content %}
